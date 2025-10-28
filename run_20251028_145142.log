@@ -1,0 +1,21 @@
+=== RECALL pipeline start @ 20251028_145142 ===
+CUDA_VISIBLE_DEVICES=
+[Step0] prepare samples
+✅ samples/SST-2.txt (300 lines)
+✅ samples/SQuAD2.0.txt (200 lines)
+✅ samples/IWSLT2017-en-fr.txt (200 lines)
+✅ samples/RACE.txt (200 lines)
+✅ samples/MedMCQA.txt (200 lines)
+[Step1] SFT task SST-2
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:01,  1.71it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.77it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.78it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.86it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.82it/s]
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+/home/kaia/miniforge3/envs/recall/lib/python3.10/site-packages/torch/utils/checkpoint.py:460: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+SST-2 step=0 loss=4.1279
+SST-2 step=50 loss=0.3354
+SST-2 step=100 loss=1.1698
+SST-2 step=150 loss=0.7763
+SST-2 step=200 loss=1.5614
+SST-2 step=250 loss=1.7203
+✅ Saved ./adapters/SST-2
