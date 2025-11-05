@@ -155,7 +155,12 @@ def find_transformer_blocks(peft_model):
     if not candidates:
         raise RuntimeError("No transformer block list found in model structure.")
     best = max(candidates, key=lambda c: len(c))
-    return best  # 這應該是 ModuleList-like of blocks
+
+    if not candidates:
+        raise RuntimeError("No transformer block list found in model structure.")
+    best = max(candidates, key=lambda c: len(c))
+    print(f"[find_transformer_blocks] picked candidate with {len(best)} layers")
+    return best
 
 def fuse_models(base_model_name, adapter_paths, weights_per_layer, out_dir):
     """

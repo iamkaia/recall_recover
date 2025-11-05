@@ -21,3 +21,7 @@ data/
 datasets/
 cache/
 .hf_cache/
+
+adapters/
+fused_recall/
+fused_erecall/

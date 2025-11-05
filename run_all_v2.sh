@@ -62,13 +62,26 @@ python merge_recall.py \
 #   --entropy_file ./reprs/SST-2_entropy.pt \
 #   --out_dir ./fused_erecall
 
+echo "[Step4] merge: eRECALL (entropy-aware)"
+python merge_erecall.py \
+  --base_model $BASE \
+  --adapters ./adapters/SST-2 ./adapters/SQuAD2.0 ./adapters/IWSLT2017-en-fr ./adapters/RACE ./adapters/MedMCQA \
+  --reprs ./reprs/SST-2_repr.pt ./reprs/SQuAD2.0_repr.pt ./reprs/IWSLT2017-en-fr_repr.pt ./reprs/RACE_repr.pt ./reprs/MedMCQA_repr.pt \
+  --entropy_file ./reprs/SST-2_entropy.pt \
+  --out_dir ./fused_erecall
+
+
 # ===== Step 5. 評估 =====
-echo "[Step5] eval RECALL"
-python evaluate_all_tasks.py --model ./fused_recall > recall_results.txt
+# echo "[Step5] eval RECALL"
+# python evaluate_all_tasks.py --model ./fused_recall > recall_results.txt
+
 
 # 如果你之後打開 eRECALL，就在這邊多跑一行：
 # echo "[Step5b] eval eRECALL"
 # python evaluate_all_tasks.py --model ./fused_erecall > erecall_results.txt
+
+python evaluate_all_tasks.py --model ./fused_recall --base_model Qwen/Qwen2-7B-Instruct --quiet > recall_results.txt
+python evaluate_all_tasks.py --model ./fused_erecall --base_model Qwen/Qwen2-7B-Instruct --quiet > erecall_results.txt
 
 # ===== Step 6. 統整表格 =====
 echo "[Step6] summarize"
