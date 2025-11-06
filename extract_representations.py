@@ -5,6 +5,8 @@ import torch.nn.functional as F
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
 
+
+###  這個file在幹麻啊?為甚麼是高墒啊? 我看起來他是找高墒這樣是對的嗎?
 @torch.no_grad()
 def sample_entropy(model, tok, texts, device):
     ent = []
@@ -27,6 +29,7 @@ def sample_entropy(model, tok, texts, device):
         ent.append(token_entropy)
     return ent  # list[float], len = len(texts)
 
+'''
 @torch.no_grad()
 def get_reprs(model, tok, texts, device, max_len=256):
     """
@@ -65,6 +68,37 @@ def get_reprs(model, tok, texts, device, max_len=256):
     # 最後得到 [N, L, H]
     all_samples = torch.cat(all_samples, dim=0)
     return all_samples  # torch.Tensor
+'''
+
+@torch.no_grad()
+def get_reprs(model, tok, texts, device, max_len=256):
+    model.eval()
+    all_samples = []
+    for t in texts:
+        enc = tok(
+            t,
+            return_tensors="pt",
+            truncation=True,
+            max_length=max_len,
+            padding=True,
+        ).to(device)
+        out = model(
+            **enc,
+            output_hidden_states=True,
+            use_cache=False,
+        )
+        # attention-mask 平均: [1, seq, 1]
+        mask = enc["attention_mask"].float()[:, :, None]  # [1, T, 1]
+        mask_sum = mask.sum(dim=1).clamp_min(1.0)         # [1, 1]
+
+        layer_vecs = []
+        for layer_h in out.hidden_states:                  # [1, T, H]
+            pooled = (layer_h * mask).sum(dim=1) / mask_sum
+            layer_vecs.append(pooled.squeeze(0).detach().to("cpu"))  # [H]
+        layer_mat = torch.stack(layer_vecs, dim=0)         # [L, H]
+        all_samples.append(layer_mat.unsqueeze(0))         # [1, L, H]
+    return torch.cat(all_samples, dim=0)                   # [N, L, H]
+
 
 def main(args):
     device = "cuda"

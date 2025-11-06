@@ -15,6 +15,7 @@ def cosine_layer_sim(a_layer, b_layer):
     sim = F.cosine_similarity(a_mean, b_mean, dim=-1)  # [1]
     return sim.item()
 
+'''
 def compute_layer_weights(repr_blobs):
     """
     repr_blobs: list of dicts:
@@ -48,7 +49,44 @@ def compute_layer_weights(repr_blobs):
         weights_per_layer.append(w)  # list length L, each [num_models]
 
     return weights_per_layer  # list of length L
+'''
 
+import math
+
+def rbf_sim(A, B, sigma=1.0):
+    """
+    A: [Na, H], B: [Nb, H]
+    返回平均 RBF 相似度（先做 pairwise，再平均），等同論文式(1)
+    """
+    # 先取兩組的均值向量也可以，但更貼近論文是 pairwise；為避免 O(N^2) 太大，我們採「均值向量 + 校正」
+    a = A.mean(dim=0, keepdim=True)   # [1,H]
+    b = B.mean(dim=0, keepdim=True)   # [1,H]
+    diff2 = ((a - b) ** 2).sum(dim=-1)  # [1]
+    return torch.exp(- diff2 / (2 * (sigma ** 2))).item()
+
+def compute_layer_weights(repr_blobs, anchor_idx=0, sigma=1.0):
+    """
+    repr_blobs: list of dicts { "task": str, "reprs": Tensor[N,L,H] }
+    anchor_idx: 指定哪一個是新任務 M_N 的表示（務必正確！）
+    回傳: list[L] of Tensor[num_models]，每層一個 softmax 權重向量
+    """
+    num_models = len(repr_blobs)
+    anchor = repr_blobs[anchor_idx]["reprs"]  # [N0, L, H]
+    L = anchor.shape[1]
+
+    weights_per_layer = []
+    for layer_idx in range(L):
+        sims = []
+        anchor_layer = anchor[:, layer_idx, :]  # [N0,H]
+        for m_idx in range(num_models):
+            cur = repr_blobs[m_idx]["reprs"][:, layer_idx, :]  # [Nm,H]
+            sims.append(rbf_sim(anchor_layer, cur, sigma=sigma))
+        sims_t = torch.tensor(sims)             # [num_models]
+        w = torch.softmax(sims_t, dim=0)        # softmax over models（與論文一致）
+        weights_per_layer.append(w)
+    return weights_per_layer
+
+    
 def load_model_with_adapter(base_model_name, adapter_path):
     """
     載一個 base + adapter (4bit) 到 GPU。
@@ -222,6 +260,7 @@ def main():
     ap.add_argument("--adapters", nargs="+", required=True)
     ap.add_argument("--reprs", nargs="+", required=True)
     ap.add_argument("--out_dir", default="./fused_recall")
+    ap.add_argument("--anchor_task", type=str, required=True)
     args = ap.parse_args()
 
     # 載 repr blobs (CPU)
@@ -232,6 +271,12 @@ def main():
             "task": blob["task"],
             "reprs": blob["reprs"],  # [N,L,H]
         })
+
+    # ...
+    tasks = [b["task"] for b in repr_blobs]
+    anchor_idx = tasks.index(args.anchor_task)
+    weights_per_layer = compute_layer_weights(repr_blobs, anchor_idx=anchor_idx, sigma=1.0)
+
 
     # 算每層融合權重
     weights_per_layer = compute_layer_weights(repr_blobs)

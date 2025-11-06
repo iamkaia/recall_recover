@@ -1,3 +1,4 @@
+'''
 import ast
 import csv
 import os
@@ -87,6 +88,48 @@ def main():
     for r in rows:
         print(",".join(str(x) for x in r))
 
+    print(f"[analyze] Wrote {OUT_CSV}")
+
+if __name__ == "__main__":
+    main()
+'''
+# analyze_results.py
+import ast, csv, os, math
+
+OUT_CSV = "summary_table.csv"
+TASK_ORDER = ["SST-2","SQuAD2.0","IWSLT2017-en-fr","RACE","MedMCQA"]
+
+def safe_load(path):
+    if not os.path.exists(path):
+        return {t: float("nan") for t in TASK_ORDER}
+    with open(path, "r") as f:
+        txt = f.read().strip()
+    try:
+        d = ast.literal_eval(txt)
+    except Exception:
+        d = {t: float("nan") for t in TASK_ORDER}
+    return {t: float(d.get(t, float("nan"))) for t in TASK_ORDER}
+
+def avg(d):
+    vals = [v for v in d.values() if not (isinstance(v, float) and math.isnan(v))]
+    return sum(vals)/len(vals) if vals else float("nan")
+
+def main():
+    recall = safe_load("recall_results.txt")
+    he     = safe_load("he_recall_results.txt")  # 讀高熵版
+
+    rows = []
+    rows.append(["RECALL"] + [recall[t] for t in TASK_ORDER] + [avg(recall)])
+    rows.append(["HE-RECALL(ours)"] + [he[t] for t in TASK_ORDER] + [avg(he)])
+
+    header = ["model"] + TASK_ORDER + ["avg"]
+    with open(OUT_CSV, "w", newline="") as f:
+        w = csv.writer(f); w.writerow(header); w.writerows(rows)
+
+    print("=== SUMMARY ===")
+    print(",".join(header))
+    for r in rows:
+        print(",".join(str(x) for x in r))
     print(f"[analyze] Wrote {OUT_CSV}")
 
 if __name__ == "__main__":
