@@ -1,20 +1,50 @@
-Medical question: In a child with active liver failure, the most important prognosis factor for death is – Options: Increasing transaminases, Increasing bilirubin, Increasing prothrombin time, Gram (–)ve sepsis
-Medical question: The source of calcium ions of a calcific bridge in a
-Medical question: Physiological changes seen in laparoscopy include all except: Options: Increased ICP, Decreased FRC, Increased CVP, Increased pH
-Medical question: Child of Vasanthi was weaned from breast milk on the 5th day and was given sugarcane juice the child developed hypoglycemia and hepatomegaly biochemical examination showed hypophosphatemia and enzyme deficiencies–reducing substances in urine. The child is probably suffering from which of the following enzyme deficiencies – Options: Fructokinase, Aldolase B, Glucose 6 Phosphatase, Beta galactosidase
-Medical question: Anti monsoon curve seen in : Options: Premolar, Molar, Anterior, All of the above.
-Medical question: Topical administration of I% Pilocarpine failed to produce pupillary constriction in a patient who had a large, dilated pupil What should be the most probable reason? Options: Adie's tonic pupil, Diabetic III nerve palsy, Pharmacological blockade, Uncal herniation
-Medical question: A child's behaviour is traced to have dental difficulties
-Medical question: Which primary tooth resemble premolar Options: Upper 1st molar, Lower 1st molar, Upper 2nd molar, Lower 2nd molar
-Medical question: In Erythroblastosis fetalis not involved is – Options: Anti C, Anti D, Anti E, Anti Lewis
-Medical question: Most common tumor of lacrimal gland: Options: Trans-scaphoid perilunate fracture, Scaphoid fracture, Distal radius fracture, Hamate fracture
-Medical question: Pre-maturity in edge to edge position is relieved by reducing: Options: Mandibular incisal edge., Maxillary lingual fossa., Both AB, Either AB
-Medical question: A 75 year old chronic smoker who is diabetic and edentulous for the last 30 years has a bilateral body fracture, best treatment modality is Options: ORIF with reconstruction plate, Gunning splints, Two mini plates, Wire osteosynthesis
-Medical question: Which of the following is not true about stamp cusp? Options: Maintain vertical height of face, Facial incline might contact in MI, Sharp cusps and prominent ridges are present, Not recalled
-Medical question: A 3 week neonate with ambiguous genitalia presented with Na+ 127 meq/L, K+ 7.2 meq/L wit BP 52/24 mm Hg and he was managed with IV fluids. What is the next step of management? Options: Spironolactone, Hydrocoisone administration, Broad spectrum antibiotics, Calcium gluconate
-Medical question: In a	6-month-old child, thick curd like white	patch
-Medical question: Which statements is true regarding VENTOUSE : Options: Minor scalp abrasions and subgaleal hematomas in new born are more frequent than forceps, Can be applied when foetal head is above the level of ischial spine, Maternal trauma is more frequent than forceps, Can not be used when fetal head is not fully rotated
-performed is: Options: Blood vessel borne, Derided cells, Dentin, From the calcium hydroxide
-tooth in which calcium hydroxide pulpotomy has been
-Medical question: To check objective pain response, which is best used method Options: Facial pain scale, Knee jerk reflex, H - Reflex, R III Reflex
+Medical question: 2, 3-BPG binds to sites of haemoglobin and the affinity for oxygen Options: 4, decreases, 1, decreases, 4, increases, 1, increases
 Medical question: 27.	The lateral spread of dental caries is facilitated mostly  by the Options: Enamel spindles, Dentinoenamel junction, Enamel lamellae, Striae of Retzius
+Medical question: In a	6-month-old child, thick curd like white	patch
+Medical question: A patient diagnosed with carcinoma of lung presented with a serum calcium level of 16.4 mmol/L. What will be the first step in management? Options: IV fluids and furosemide, Immediate hemodialysis, Bisphosphonates, Chemotherapy with gemcitabine and carboplatin
+Medical question: Which one of the following is a muscle splitting incision? Options: Kocher's incision, Rutherford-Morrison incision, Pfannenstiel incision, Lanz incision
+Medical question: Iron is present in all, EXCEPT Options: Myoglobin, Cytochrome, Catalase, Pyruvate kinase
+Medical question: What is the basis of behavior shaping: Options: Stimulus response theory, Social learning principle., Hierarchy of needs, None of the above.
+Medical question: Most common presentation of abdominal desmoids tumor is? Options: Abdominal pain, Abdominal mass, Fever, Urinary retention
+Medical question: All of these are continuous variables except: Options: Height in cms, Weight in kg, Blood groups A. B. ABO, Age in years and months
+Medical question: This direction of force can cause: Options: Reduce overbite, Worsen open bite, Both, None
+Medical question: In a patient with competent lips together at rest, the lip
+Medical question: Anti monsoon curve seen in : Options: Premolar, Molar, Anterior, All of the above.
+Medical question: Which pa of brachial plexus do not give branches Options: Root, Division, Cord, Trunk
+Medical question: Which of the following are not a branch of external carotid Aery in Kiesselbach's plexus. Options: Sphenopalatine aery, Anterior ethmoidal aery, Greater palatine aery, Septal branch of superior labial aery
+Medical question: Absorption of which of the following drugs is increased after a fatty meal? Options: Amphotericin B, Griseofulvin, Ampicillin, Aspirin
+Medical question: What is common in class I cavity preparation for amalgam and gold inlay? Options: Buccolingually divergent walls, Mesiodistally divergent walls, Maximum depth is needed in both cases to provide sufficient thickness, All of the above
+Medical question: The most common bone tumor that occurs in children is: Options: Osteosarcoma, Ewing's sarcoma, Metastatic carcinoma, Multiple myeloma
+Medical question: Due to which of the following enzyme deficiency, vitamin C cannot be synthesised in humans? Options: L-Glucuronic acid oxidase, L-Gulonic acid reductase, L-Gulonolactone oxidase, L-Gulonolactone reductase
+Medical question: Which of the following is a component of Pentalogy of Fallot – Options: Atrial septal Defect (ASD), Patent Ductus Arteriosus (PDA), Coarctation of Aorta (COA), Left Ventricular Hypertrophy (LVH)
+Medical question: Which of the following exists as yeast at 37deg and hyphae at 25deg? Options: Histoplasma capsulatum, Sporothrix globosa, Candida albicans, Cryptococcus neoformans
+Medical question: For which of the following is PPV-23 is most beneficial: Options: Cystic fibrosis patient, Sickle cell anemia patient, Patient with recurrent rhinitis and sinusitis, Child less than 2 years
+Medical question: Which of the following is used as, surface hardener in Impression material? Options: 2% potassium sulfate, 0.2% potassium sulfate, 2% sodium sulfate, 4% potassium sulfate
+Medical question: Calcium ions triggers muscle contraction by binding to: Options: Actin, Myosin, Troponin, Tropomyosin
+Medical question: Endocrine glands that are not influenced by the pituitary gland include the: Options: Thyroid gland, testes, and adrenal medulla, Adrenal medulla, parathyroids, and the islets of langerhans, Adrenal cortex, parathyroids and ovaries, Pancreas, adrenal medulla and thyroid gland
+Medical question: A patient presented with flat topped violaceous papules, thinning of nails and onycholysis. What is the microscopic finding observed in this patient? Options: Prominent necrotic cell, Suprabasal split, Basal cell degeneration, Acantholysis
+Medical question: A patient from,nqh-eastern states was diagnosed to have infection with P. falciparum malaria. What is the most appropriate drug for this patient? Options: Aemether plus lumefantrine, Sulfadoxine plus pyrimethamine, Chloroquine, Mefloquine
+Medical question: Which of the following structure is not present on floor of third ventricle? Options: Optic stalk, Third nerve, Infundibulum, Mammillary body
+from	his	mother.	The	most	satisfactory	method	of
+Medical question: The zygomatic bone does not articulate with: Options: Frontal bone, Maxillary bone, Nasal bone, Temporal bone
+Medical question: Percentage of carbon in carbon steel hand instruments is Options: 1-1.2%, 10-12%, 0.6 to 0.8%, 6 to 8%
+Medical question: Name the structure marked with arrow Options: Mitochondria, Golgi bodies, Secretory vesicles, Rough Endoplasmic reticulum
+Medical question: Alginate at 20 degrees, the gel is formed in Options: 3-4 mins., 6-8 mins., 15-16 mins., 1-2 min.
+Medical question: The following test may be abnormal in disseminated intravascular coagulation except: Options: Prothrombin, Activated partial thromboplastin time, D-timer levels, Clot solubility.
+Medical question: A patient who was on ventilator and being ventilated for past few days, suddenly pulls out the endotracheal tube. What is the next step of management? Options: Assess the patient, give bag and mask ventilation and look for spontaneous breathing, Sta bag and mask ventilation and reintubate, Sedate and reintubate, Make him sit and do physiotherapy
+Medical question: Which of the following lipoproteins does not move towards charged end in electrophoresis? Options: VLDL, LDL, HDL, Chylomicrons
+tooth in which calcium hydroxide pulpotomy has been
+Medical question: In a couple for treatment of infeility from the last four years, female paner is normal. Male paner has 0.8 ml semen volume per ejaculate on two repeated samples and absent fructose, with no sperms on examination under microscope. What is the next line of management? Options: Per-rectal examination to check ejaculatory duct obstruction, Give antioxidants, Testicular biopsy, Transrectal ultrasound to detect duct obstruction
+Medical question: Which of the following type of failure may occur, if the coefficient of thermal expansion of ceramic is much lower than that of metal? Options: Cohesive failure of ceramic, Adhesive failure of metal ceramic bond, Cohesive failure of metal, Cohesive failure of metal ceramic bond
+Medical question: Tonsils developed from: Options: Ventral part of 3rd pouch., Ventral part of 2nd pouch., Dorsal part of 2nd pouch., Ventral part of 3rd pouch.
+appears on the buccal mucosa. On rubbing it leaves an
+Medical question: A patient presents with carcinoma of the larynx involving the left false cords, left arytenoid and the left aryepiglottic folds with bilateral mobile true cords. Treatment of choice is - Options: Vertical hemilaryngectomy, Horizontal partial hemilaryngectomy, Total laryngectomy, Radiotherapy followed by chemotherapy
+Medical question: Reflex which never disappear: Options: Walking and stepping reflex, Limb placement reflex, Parachute reflex, All of the above
+Medical question: Which of the following statements is true regarding medical aboion? Options: Ultrasound should be done in all cases, If the patient has an IUCD in-situ, it doesn't need to be removed, Can only be done up to 72 days, Only a person ceified under MTP act can perform medical termination of pregnancy
+Medical question: All of the following are true regarding Class-II inlay gingival margins preparation except? Options: Removal of week enamel rods, Increased metal burnishability, Lap sliding fit of metal margin, Margins of restoration in self-cleansable area
+Medical question: According to the intelligence quotient classification, a score of 90-110 is: Options: Low average., Average, Superior, Mentally retarded.
+Medical question: A child born with multiple congenital defect including cleft palate, neural tube defect, atrial septal defect and microcephaly which of the following drug is used by mother during pregnancy: Options: Erythromycin, Isotretinoin, Ibuprofen, Metronidazole
+Medical question: Base pairs in DNA Options: 1.5 billion, 46 billions, 3.2 billion, 100 billion
+Medical question: In a study, two groups of newborns are checked for their weights based on whether their mothers received food supplements or not. The appropriate test which can be used for comparing the data is: Options: Chi square test, Paired T-test, Student's T-test, Fischer exact test
+Medical question: Pre-maturity in edge to edge position is relieved by reducing: Options: Mandibular incisal edge., Maxillary lingual fossa., Both AB, Either AB
+Medical question: Shortest root of maxillary 1st molar Options: Distobuccal, Mesiobuccal, Palatal, All are equal

@@ -1,0 +1,71 @@
+nohup: ignoring input
+✅ samples/SST-2.txt (300 lines)
+✅ samples/SQuAD2.0.txt (200 lines)
+✅ samples/IWSLT2017-en-fr.txt (200 lines)
+✅ samples/RACE.txt (200 lines)
+✅ samples/MedMCQA.txt (200 lines)
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.30it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.44it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.51it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.62it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.54it/s]
+[typicals] wrote ./samples/typicals/SST-2.typical.txt (50)
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.30it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.45it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.50it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.61it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.55it/s]
+[typicals] wrote ./samples/typicals/SQuAD2.0.typical.txt (50)
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.32it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.45it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.50it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.62it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.55it/s]
+[typicals] wrote ./samples/typicals/IWSLT2017-en-fr.typical.txt (50)
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.31it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.47it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.52it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.64it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.57it/s]
+[typicals] wrote ./samples/typicals/RACE.typical.txt (50)
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.32it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.45it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.50it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.61it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.54it/s]
+[typicals] wrote ./samples/typicals/MedMCQA.typical.txt (50)
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.36it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.49it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.54it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.66it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.59it/s]
+✅ saved SST-2 repr -> ./reprs
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.36it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.49it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.53it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.65it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.58it/s]
+✅ saved SQuAD2.0 repr -> ./reprs
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.33it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.48it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.53it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.65it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.58it/s]
+✅ saved IWSLT2017-en-fr repr -> ./reprs
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.31it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.48it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.54it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.66it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.58it/s]
+✅ saved RACE repr -> ./reprs
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.38it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.51it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.55it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.66it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.60it/s]
+✅ saved MedMCQA repr -> ./reprs
+usage: merge_recall.py [-h] --base_model BASE_MODEL --adapters ADAPTERS
+                       [ADAPTERS ...] --reprs REPRS [REPRS ...]
+                       [--anchor_task ANCHOR_TASK] [--metric {rbf,cos}]
+                       [--sigma SIGMA] [--uniform_weights] [--out_dir OUT_DIR]
+merge_recall.py: error: unrecognized arguments: --temp_head 2.0 --temp_tail 0.6
+The `load_in_4bit` and `load_in_8bit` arguments are deprecated and will be removed in the future versions. Please, pass a `BitsAndBytesConfig` object in `quantization_config` argument instead.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.33it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.48it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.53it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.65it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.57it/s]
+Traceback (most recent call last):
+  File "/home/kaia/miniforge3/envs/recall/lib/python3.10/site-packages/peft/config.py", line 197, in _get_peft_type
+    config_file = hf_hub_download(
+  File "/home/kaia/miniforge3/envs/recall/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 106, in _inner_fn
+    validate_repo_id(arg_value)
+  File "/home/kaia/miniforge3/envs/recall/lib/python3.10/site-packages/huggingface_hub/utils/_validators.py", line 160, in validate_repo_id
+    raise HFValidationError(
+huggingface_hub.errors.HFValidationError: Repo id must use alphanumeric chars, '-', '_' or '.'. The name cannot start or end with '-' or '.' and the maximum length is 96: './fused_recall'.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/kaia/recall/evaluate_all_tasks.py", line 488, in <module>
+    main(args)
+  File "/home/kaia/recall/evaluate_all_tasks.py", line 470, in main
+    model = load_fused_model(args.model, args.base_model, device=args.device)
+  File "/home/kaia/recall/evaluate_all_tasks.py", line 264, in load_fused_model
+    fused = PeftModel.from_pretrained(base, fused_dir)
+  File "/home/kaia/miniforge3/envs/recall/lib/python3.10/site-packages/peft/peft_model.py", line 328, in from_pretrained
+    PeftConfig._get_peft_type(
+  File "/home/kaia/miniforge3/envs/recall/lib/python3.10/site-packages/peft/config.py", line 203, in _get_peft_type
+    raise ValueError(f"Can't find '{CONFIG_NAME}' at '{model_id}'")
+ValueError: Can't find 'adapter_config.json' at './fused_recall'
+=== SUMMARY ===
+model,SST-2,SQuAD2.0,IWSLT2017-en-fr,RACE,MedMCQA,avg
+RECALL,nan,nan,nan,nan,nan,nan
+HE-RECALL(ours),nan,nan,nan,nan,nan,nan
+[analyze] Wrote summary_table.csv

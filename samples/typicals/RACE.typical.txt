@@ -1,20 +1,50 @@
-Question: What is the passage mainly about? Options: How to spend your free time., Some good habits at home., How to do your homework., Some don't do and do in schools.
-Question: In which column  can An Dun's The Chinese Dream be found? Options: Business., Arts., Society., Movies.
-Question: Which of the following statements is NOT RIGHT according to the passage? Options: Kays of Scotland has been curling stone maker for more than 150 years., The weight of each curling stone must be 44 pounds., We use a special machine to polish the curling stone., The workers in Kays are all experienced.
-Question: _   is Anna's favorite color. Options: Yellow, Blue, Red, Green
-Question: Who didn't really enjoy the stay in a foreign country very much? Options: Mariko., Carla., Alvin., None of them.
+Question: If you have little money,  you can collect stamps  _  . Options: by your own letters, by the post office, by the collectors, by your friends
 Question: What can we infer from the passage? Options: College students needn't worry about money., It's important to follow the advisors' advice., Students can spend more than their income., Borrowing money from others is very easy.
-Question: Most people like to keep   _   animals at home. Options: small, white, big, black
-Question: What can we learn from the passage? Options: If we do well, we will have well., If we move stones, we will have a lot of money., The young man was lucky., Other people were unlucky.
-Question: Which is the best title of the passage? Options: Wang Lin's life, Looking for treasure, Shopping online is not safe, Online shopping in China
-Question: Which one isn't right? Options: School is over at 3.30 p.m. in the UK., Peter is good at all his lessons., Peter has no time to go to clubs every day., Peter has a wonderful time at school.
-Question: According to Lucy Li, golf  _  . Options: is easy to learn, is suitable   for anyone, takes lots of time, is a usual sport
-Question: What is Daniel good at? Options: Math, English, Chinese, PE
-Question: John should before he takes it. Options: shake the medicine well, eat nothing, do some exercise, drink a cup of tea
-Question: Which of the following is NT true according to the passage? Options: Hobbies and collections are a great way to have fun., Some countries print stamps mostly for collectors., You can collect stamps from your everyday mails., Most of the countries didn't want to print their names on stamps.
-Question: Bell wants to find a   _  . Options: sister, brother, football, penfriend
-Question: Which of the following sentences is TRUE about Lucy Li? Options: She likes many subjects., She loves no sport but golf., She cares much about winning or losing., She is sure she can win.
-Question: Mr Jones wanted to have  _   room to live in. Options: a beautiful, a dear, the cheapest, a larger
+Question: Bell's grandfather doesn't like   _  . Options: birds or goldfish, birds or dogs, dogs or cats, goldfish or football
+Question: The thief feels   _   when he hears the bird's words. Options: sad, afraid, happy, excited
+Question: Grandma tells   Sally to take   _   things to Bob. Options: three, four, five, six
+Question: Why couldn't the young student go to sleep? Options: She was worried about her lessons., She always couldn't finish her homework., She worked too hard and became ill., Her bed was too small.
+Question: Lucy Li said she played in the US Women's Open  _  . Options: for good results, to have fun, to make friends with great players, to make money
+Question: How long is the first term in Thailand schools? Options: For six months., For five months., For four months., For three moths.
+Question: This passage is about  _  . Options: new words in writing, different dictionaries, the best way of reading, using an English-Chinese dictionary
+Question: What did the writer first do when he saw the alien? Options: He was too scared to move., He knew it was a dream and wasn't afraid., He was so scared that he fainted., He thought against the alien.
+Question: For the children like Fu Yuan, studying isn't the main thing because  _  . Options: they have to go out and make money, they like playing games better than studying, they needn't go to a good college, they have lots of things to do at home
+Question: What does the writer think of shopping online? Options: It's safe, It's dangerous, It's scary, We don't know
+Question: When do students usually get to school? Options: At 7:00 a.m., At 7:30 a.m., At 8:00 a.m., At 8:30 a.m.
+Question: What lesson can you learn from the story? Options: There's always someone better than you in this world., You must never try to become better than your teacher., The older a man is,the better archer he usually becomes., Always use a piece of wood to protect yourself from an arrow.
+Question: Which of the following is NOT TRUE? Options: Betty made the best cake., Mary Jackson sang well., Bill played the violin well., The Jacksons did hard work for the party.
+Question: How many books has Dou Kou already finished writing? Options: 3., 6., 9., 12
+Question: What DOESN'T the writer do in his dream school day? Options: Have lunch., Speak English., Swim., Play computer games.
+Question: Which of the following is NOT true?  _ Options: Most students don't do the housework., Liu Ying is a student from Class 6, Grade 8., Liu Ying cooks three times a day sometimes., Liu Ying washes the dishes and cleans the floor every day.
+Question: Mr Jones' son often stays at   _  room. Options: the smallest, a cheap, a small, the dearest
+Question: What can you use to put food in your mouth? Options: Knife., Knife or fork., Knife and fork, fork
+Question: The best title  for this passage is   _  . Options: Bad Seasons, Summer or Winter, The Weather in England, Strange English People
+Question: The son does not know what water and grass look like   _  . Options: when they meet the water and grass for the first time, when he finds the second oasis, before he meets the first oasis, after they meet the water and grass for the second time.
+Question: Studies have shown that many diseases have something to do with   _  . Options: having no oral examination, washing hands with cold water, sleeping too late sometimes, doing little physical activity
+Question: How many people are there in most families in modern China ? Options: Three, Five, Six, Seven
+Question: The passage is probably from   _  . Options: a newspaper, an advertisement, an instruction   book, a storybook
 Question: The   _   is / are under the bed. Options: pen, notebook, keys, baseball
-Question: The best title  of the passage is   _  . Options: How to learn well, Study in a quiet place, Study with a good desk, Good study habits.
-Question: The pop star felt   _   after the performance. Options: tired, excited, sad, both A and B
+Question: What is the main idea of the passage? Options: People from different cultures have different ideas about numbers and math., Chinese people can count more easily on their fingers than Americans., In some aboriginal cultures,people don't even know how to count., Some languages don't have number words because people don't need numbers.
+Question: How many people lost their lives in this accident? Options: Over 2,000 people., About 100 people., More than 1,500 people., We don't know.
+Question: Sally is Bob's   _  . Options: sister, aunt, mom, grandma
+Question: Which statement is NOT true according to the passage? Options: That e-schoolbags may be easily broken, It may not be good to student's eyes., They have been into use in school in China., The e-schoolbag will solve the problem of the heavy schoolbags.
+Question: Which of the following is NT true according to the passage? Options: Hobbies and collections are a great way to have fun., Some countries print stamps mostly for collectors., You can collect stamps from your everyday mails., Most of the countries didn't want to print their names on stamps.
+Question: According to the notice, you can take  _   into the theater. Options: cameras, mobile phones, bags, videos .
+Question: Who put the stone in the center of the road? Options: An old man., A rich man., A young man., Another man.
+Question: Which of the following is true? Options: Emperor Yang of the Sui Dynasty is considered one of the best tyrants., Emperor Yang was killed by the robbers in one of his palaces in Yangzhou., Everyone complains that the Sui Dynasty ended because of the canal., The canal runs from Beijing to Yangzhou, covering a distance of nearly 1,800 kilometres.
+Question: What is Daniel good at? Options: Math, English, Chinese, PE
+Question: Students who live in university pay thousands more per year for  _  . Options: rooms, clothes, travelling, books
+Question: What is the passage mainly about? Options: How to spend your free time., Some good habits at home., How to do your homework., Some don't do and do in schools.
+Question: Why does it take both parents to raise a child? Options: A child feels safer with both parents., A child feels happier with both parents., Both parents need to consider that children have different needs at different ages., It is both the father's and the mother's duty to raise a child.
+Question: Which of the following is true? Options: The death of Cao's mother influenced Cao a lot., Cao's sister lives in the poor countryside now., The Chinese Dream series will be written in English., An dislkes to be a reporter and interview people.
+thanniversary of the Titanic., The moon's great influence on the Earth's tides., The moon's role in the sinking of the Titanic.
+Question: Which of the following would lead to a waste of water? Options: Using low-flow shower heads., Collecting shower water while waiting for it to warm up., Taking a quick shower., Keeping the water running while brushing one's teeth.
+Question: The rest of the money will be used to rebuild   _   in the disaster area. Options: schools, airports and shops, villages, factories and stations, orphanages, gyms and schools, villages, schools and orphanages
+Question: If you can't reach the food, what will you do? Options: Reach across the table., Reach in front of another person., Ask somebody to pass it to you., Reach by yourself.
+Question: Which of the following about icebergs is TRUE? Options: Icebergs move only when the tide frees them., An iceberg can stop for some time during its travel., An iceberg will move as soon as its melts., It takes an iceberg several months to leave its place.
+Question: To learn things quickly, you should   _  . Options: have good study habits, study in the living room, study in the bedroom, study with a good desk
+Question: Mr Jones was a   _  . Options: rich man, writer  `, worker, farmer
+Question: John will  _   the medicine when it is left after Dec. 1st, 2003. Options: throw away, stop to take, take once, take six times more
+Question: Which color is NOT mentioned  in the passage? Options: Orange, White, Green, Black
+Question: What are the most popular online? Options: Candies and DVD players., Treasure products., Clothing and home-use products., Clothes and books.
+Question: What's the passage mainly about? Options: The history of curling., How to make a curling stone., The rules of curling., How to become a curling stone maker.

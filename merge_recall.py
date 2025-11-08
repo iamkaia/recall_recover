@@ -1,289 +1,281 @@
+# merge_recall.py
 import argparse
+import os
+import json
+import shutil
+import gc
+import math
 import torch
 import torch.nn.functional as F
 from transformers import AutoModelForCausalLM
 from peft import PeftModel
-import copy
-import gc
-import types
-import inspect
 
-def cosine_layer_sim(a_layer, b_layer):
-    # a_layer: [Na, H], b_layer: [Nb, H]
-    a_mean = a_layer.mean(dim=0, keepdim=True)  # [1,H]
-    b_mean = b_layer.mean(dim=0, keepdim=True)  # [1,H]
-    sim = F.cosine_similarity(a_mean, b_mean, dim=-1)  # [1]
-    return sim.item()
-
-'''
-def compute_layer_weights(repr_blobs):
-    """
-    repr_blobs: list of dicts:
-      { "task": str, "reprs": Tensor[N,L,H] }
-    回傳:
-      weights_per_layer: list of Tensors[num_models]  (每一層的融合權重)
-    """
-    num_models = len(repr_blobs)
-    anchor = repr_blobs[0]["reprs"]  # [N0, L, H]
-    L = anchor.shape[1]
-
-    weights_per_layer = []
-    for layer_idx in range(L):
-        sims = []
-        for m_idx in range(num_models):
-            cur = repr_blobs[m_idx]["reprs"][:, layer_idx, :]      # [Nm,H]
-            anchor_layer = anchor[:, layer_idx, :]                 # [N0,H]
-            sim_val = cosine_layer_sim(anchor_layer, cur)
-            sims.append(sim_val)
-
-        sims_t = torch.tensor(sims)  # [num_models]
-        if sims_t.abs().sum() == 0:
-            w = torch.ones_like(sims_t) / len(sims_t)
-        else:
-            # normalize to sum=1, keep negatives from blowing things? -> clamp at 0
-            sims_clamped = torch.clamp(sims_t, min=0.0)
-            if sims_clamped.sum() == 0:
-                w = torch.ones_like(sims_t) / len(sims_t)
-            else:
-                w = sims_clamped / sims_clamped.sum()
-        weights_per_layer.append(w)  # list length L, each [num_models]
-
-    return weights_per_layer  # list of length L
-'''
-
-import math
-
-def rbf_sim(A, B, sigma=1.0):
-    """
-    A: [Na, H], B: [Nb, H]
-    返回平均 RBF 相似度（先做 pairwise，再平均），等同論文式(1)
-    """
-    # 先取兩組的均值向量也可以，但更貼近論文是 pairwise；為避免 O(N^2) 太大，我們採「均值向量 + 校正」
-    a = A.mean(dim=0, keepdim=True)   # [1,H]
-    b = B.mean(dim=0, keepdim=True)   # [1,H]
-    diff2 = ((a - b) ** 2).sum(dim=-1)  # [1]
-    return torch.exp(- diff2 / (2 * (sigma ** 2))).item()
-
-def compute_layer_weights(repr_blobs, anchor_idx=0, sigma=1.0):
-    """
-    repr_blobs: list of dicts { "task": str, "reprs": Tensor[N,L,H] }
-    anchor_idx: 指定哪一個是新任務 M_N 的表示（務必正確！）
-    回傳: list[L] of Tensor[num_models]，每層一個 softmax 權重向量
-    """
-    num_models = len(repr_blobs)
-    anchor = repr_blobs[anchor_idx]["reprs"]  # [N0, L, H]
-    L = anchor.shape[1]
-
-    weights_per_layer = []
-    for layer_idx in range(L):
-        sims = []
-        anchor_layer = anchor[:, layer_idx, :]  # [N0,H]
-        for m_idx in range(num_models):
-            cur = repr_blobs[m_idx]["reprs"][:, layer_idx, :]  # [Nm,H]
-            sims.append(rbf_sim(anchor_layer, cur, sigma=sigma))
-        sims_t = torch.tensor(sims)             # [num_models]
-        w = torch.softmax(sims_t, dim=0)        # softmax over models（與論文一致）
-        weights_per_layer.append(w)
-    return weights_per_layer
-
-    
-def load_model_with_adapter(base_model_name, adapter_path):
-    """
-    載一個 base + adapter (4bit) 到 GPU。
-    """
-    base = AutoModelForCausalLM.from_pretrained(
-        base_model_name,
-        load_in_4bit=True,
-        torch_dtype=torch.bfloat16,
-        device_map={"":0},
-    )
-    peft_model = PeftModel.from_pretrained(base, adapter_path)
-    peft_model.eval()
-    return peft_model
-
+# ---------------------------
+# utils: 找到 transformer blocks
+# ---------------------------
 def is_block_list(obj):
-    """
-    我們想辨識 "這是不是一串 transformer blocks"
-    條件大概是:
-      - obj 是 list / ModuleList / tuple 類似的可索引序列
-      - len(obj) > 1
-      - 元素有 weight / attn / mlp 之類常見屬性
-    這很 heuristic，但夠用來找 Qwen2 / Llama2 block stack。
-    """
     if not (hasattr(obj, "__len__") and hasattr(obj, "__getitem__")):
         return False
     if len(obj) < 2:
         return False
     first = obj[0]
-    # 我們檢查這是不是 nn.Module 並且裡面有一些transformer block常見結構
     if not hasattr(first, "state_dict"):
         return False
-    # 很寬鬆地接受，因為不同架構叫法不同
-    # 我們只要它是一個有參數的 module 就好了
-    sd = first.state_dict()
-    return len(sd.keys()) > 0
+    return len(first.state_dict().keys()) > 0
 
 def find_transformer_blocks(peft_model):
-    """
-    自動找出 "一層一層 transformer block" 的 list。
-    我們會試很多可能的路徑：
-      - model.model.layers
-      - model.model.decoder.layers
-      - model.model.transformer.blocks
-      - model.base_model.model.layers
-      - model.base_model.model.transformer.blocks
-    等等
-    """
     candidates = []
-
-    # 全部潛在根節點：peft_model 本身 & peft_model.model & peft_model.base_model
-    roots = []
-    roots.append(peft_model)
+    roots = [peft_model]
     if hasattr(peft_model, "model"):
         roots.append(peft_model.model)
     if hasattr(peft_model, "base_model"):
         roots.append(peft_model.base_model)
-    # base_model 可能還包一層 .model
         if hasattr(peft_model.base_model, "model"):
             roots.append(peft_model.base_model.model)
 
-    # 從這些 roots 去找常見 field 名稱
-    field_names = [
-        "layers",
-        "blocks",
-        "h",
-        "transformer",
-        "decoder",
-        "model",
-    ]
-
-    seen_objs = set()
+    field_names = ["layers", "blocks", "h", "transformer", "decoder", "model"]
+    seen = set()
 
     def collect(obj, depth=0):
-        if obj is None:
+        if obj is None or id(obj) in seen or depth > 3:
             return
-        if id(obj) in seen_objs:
-            return
-        seen_objs.add(id(obj))
+        seen.add(id(obj))
 
-        # 1. 直接測 obj 本身是不是 block list
         if is_block_list(obj):
             candidates.append(obj)
 
-        # 2. 嘗試取屬性
-        if depth > 3:
-            return
         for name in dir(obj):
             if name.startswith("_"):
                 continue
             if name in field_names:
                 child = getattr(obj, name, None)
-                if child is not None:
-                    # child 可能本身就是list of blocks
-                    if is_block_list(child):
-                        candidates.append(child)
-                    # 否則往下爬
-                    collect(child, depth+1)
+                if child is None:
+                    continue
+                if is_block_list(child):
+                    candidates.append(child)
+                collect(child, depth + 1)
 
     for r in roots:
-        collect(r, depth=0)
-
-    # 選一個最像 transformer stack 的 candidate
-    # heuristics：長度最大者
-    if not candidates:
-        raise RuntimeError("No transformer block list found in model structure.")
-    best = max(candidates, key=lambda c: len(c))
+        collect(r, 0)
 
     if not candidates:
         raise RuntimeError("No transformer block list found in model structure.")
     best = max(candidates, key=lambda c: len(c))
-    print(f"[find_transformer_blocks] picked candidate with {len(best)} layers")
+    print(f"[find_transformer_blocks] picked {len(best)} layers")
     return best
 
-def fuse_models(base_model_name, adapter_paths, weights_per_layer, out_dir):
-    """
-    逐層加權融合，多卡記憶體友善版
-    - adapter_paths: list[str]，每個任務的 LoRA checkpoint
-    - weights_per_layer: list[L_full] of Tensor[num_models]
-    """
-    # 先載第一個做 fused 起點
-    fused_model = load_model_with_adapter(base_model_name, adapter_paths[0])
-    fused_model = fused_model.to("cuda")
+def load_model_with_adapter(base_model_name, adapter_path):
+    base = AutoModelForCausalLM.from_pretrained(
+        base_model_name,
+        load_in_4bit=True,              # 新版會 warning，但仍可用；若要乾淨可改 BitsAndBytesConfig
+        torch_dtype=torch.bfloat16,
+        device_map={"": 0},
+    )
+    peft_model = PeftModel.from_pretrained(base, adapter_path)
+    peft_model.eval()
+    return peft_model
 
+# ---------------------------
+# 權重計算（RECALL baseline）
+# ---------------------------
+def cosine_layer_sim(anchor_layer, cur_layer):
+    """
+    anchor_layer: [Na, H]
+    cur_layer   : [Nc, H]
+    以樣本平均後的向量做 cosine，相當於「該層的語義中心」相似度。
+    """
+    a = anchor_layer.mean(dim=0, keepdim=True)  # [1,H]
+    b = cur_layer.mean(dim=0, keepdim=True)     # [1,H]
+    return F.cosine_similarity(a, b, dim=-1).item()  # scalar
+
+def compute_layer_weights(repr_blobs, anchor_task=None, temp_head=1.0, temp_tail=1.0):
+    """
+    repr_blobs: list of dicts { "task": str, "reprs": Tensor[N, L, H] }
+    anchor_task: 選哪個任務當 anchor（若 None -> 取第 0 個）
+    temp_head / temp_tail: 逐層溫度（從靠近 embedding 的頭層到尾層）線性插值
+
+    回傳: list[L_full]，每個元素是 Tensor[num_models]（該層各模型的權重，softmax 後）
+    """
+    # 找 anchor index
+    anchor_idx = 0
+    if anchor_task is not None:
+        for i, b in enumerate(repr_blobs):
+            if str(b.get("task", "")).strip() == str(anchor_task).strip():
+                anchor_idx = i
+                break
+
+    num_models = len(repr_blobs)
+    L_full = repr_blobs[anchor_idx]["reprs"].shape[1]
+    print(f"[weights] anchor = {repr_blobs[anchor_idx]['task']} (index={anchor_idx}), layers={L_full}")
+
+    def layer_temp(i):
+        if L_full <= 1:
+            return float(temp_tail)
+        # 線性插值：i=0 用 temp_head, i=L_full-1 用 temp_tail
+        t = temp_head + (temp_tail - temp_head) * (i / (L_full - 1))
+        return float(max(1e-6, t))
+
+    weights_per_layer = []
+    for i in range(L_full):
+        sims = []
+        a_layer = repr_blobs[anchor_idx]["reprs"][:, i, :]  # [Na,H]
+        for m_idx in range(num_models):
+            cur_layer = repr_blobs[m_idx]["reprs"][:, i, :]  # [Nm,H]
+            sim = cosine_layer_sim(a_layer, cur_layer)
+            sims.append(sim)
+
+        sims_t = torch.tensor(sims, dtype=torch.float32)  # [num_models]
+        # 將負相似度 clamp 至 0，可避免「反向權重」
+        sims_t = torch.clamp(sims_t, min=0.0)
+
+        # 使用 softmax / temperature
+        temp = layer_temp(i)
+        if temp != 1.0:
+            sims_t = sims_t / temp
+        if sims_t.abs().sum() == 0:
+            w = torch.ones_like(sims_t) / len(sims_t)
+        else:
+            w = torch.softmax(sims_t, dim=0)
+
+        weights_per_layer.append(w)
+    return weights_per_layer
+
+# ---------------------------
+# 模型融合 + 正確儲存 LoRA
+# ---------------------------
+def fuse_models(base_model_name, adapter_paths, weights_per_layer, out_dir):
+    os.makedirs(out_dir, exist_ok=True)
+
+    fused_model = load_model_with_adapter(base_model_name, adapter_paths[0]).to("cuda")
     fused_blocks = find_transformer_blocks(fused_model)
     num_layers = len(fused_blocks)
 
-    # hidden_states 的 L_full 可能比 num_layers 多 (因為還有 embedding / final norm)
     L_full = len(weights_per_layer)
     offset = L_full - num_layers
     if offset < 0:
         raise RuntimeError(
             f"repr layers ({L_full}) < transformer blocks ({num_layers}), can't align."
         )
-    weights_per_layer_aligned = weights_per_layer[offset:]  # list[num_layers], each tensor[num_models]
+    weights_aligned = weights_per_layer[offset:]  # list[num_layers]
 
-    # 對每一層 transformer block 做加權平均
+    # 逐層融合
     for layer_idx in range(num_layers):
-        w_layer = weights_per_layer_aligned[layer_idx]  # tensor[num_models]
-
-        # 先抓 fused block (第0個模型) 的 state_dict 當 accumulator
+        w_layer = weights_aligned[layer_idx]  # tensor[num_models]
         fused_block = fused_blocks[layer_idx]
-        fused_sd = {k: v.detach().clone().to("cpu") for k,v in fused_block.state_dict().items()}
 
-        # 先乘上自己的權重 w_layer[0]
-        fused_sd = {k: fused_sd[k] * w_layer[0].item() for k in fused_sd.keys()}
+        fused_sd = {k: v.detach().clone().to("cpu") for k, v in fused_block.state_dict().items()}
+        # 先乘第 0 個模型的權重
+        for k in fused_sd.keys():
+            fused_sd[k] = fused_sd[k] * w_layer[0].item()
 
-        # 依序把剩下模型加進來
+        # 疊加其他專家
         for m_i in range(1, len(adapter_paths)):
             tmp_model = load_model_with_adapter(base_model_name, adapter_paths[m_i])
             tmp_blocks = find_transformer_blocks(tmp_model)
-            tmp_block_sd = {k: v.detach().clone().to("cpu") for k,v in tmp_blocks[layer_idx].state_dict().items()}
-
-            for key in fused_sd.keys():
-                fused_sd[key] += tmp_block_sd[key] * w_layer[m_i].item()
-
-            # 清掉暫時載的模型，釋放 VRAM
-            del tmp_model, tmp_blocks, tmp_block_sd
+            tmp_sd = {k: v.detach().clone().to("cpu") for k, v in tmp_blocks[layer_idx].state_dict().items()}
+            for k in fused_sd.keys():
+                fused_sd[k] += tmp_sd[k] * w_layer[m_i].item()
+            del tmp_model, tmp_blocks, tmp_sd
             gc.collect()
             torch.cuda.empty_cache()
 
-        # 把融合後結果 load 回 fused_model 對應層
         fused_block.load_state_dict(fused_sd)
 
-    # 儲存 fused model
-    fused_model.save_pretrained(out_dir)
-    print(f"✅ Saved fused model to {out_dir}")
+    # -------- 正確儲存 LoRA（避免 adapter_config.json 壞掉）--------
+    ok = False
+    try:
+        fused_model.save_pretrained(out_dir)
+        ok = os.path.isfile(os.path.join(out_dir, "adapter_model.bin")) or \
+             os.path.isfile(os.path.join(out_dir, "adapter_model.safetensors"))
+    except Exception as e:
+        print(f"[WARN] save_pretrained failed: {e}")
 
+    if not ok:
+        print("[WARN] Default save failed, manually saving LoRA weights...")
+        # 1) 只存 LoRA 權重
+        try:
+            lora_state = fused_model.get_peft_model_state_dict()
+        except Exception:
+            full_sd = fused_model.state_dict()
+            lora_state = {k: v for k, v in full_sd.items() if "lora_" in k}
+        torch.save(lora_state, os.path.join(out_dir, "adapter_model.bin"))
+
+        # 2) adapter_config.json：從第一個 adapter 拷貝（保證 target_modules/r/alpha 等一致）
+        src_cfg = os.path.join(adapter_paths[0], "adapter_config.json")
+        dst_cfg = os.path.join(out_dir, "adapter_config.json")
+        if os.path.isfile(src_cfg):
+            shutil.copy(src_cfg, dst_cfg)
+        else:
+            # 極少見：若來源沒有 config，就用 peft_config 產一份最小可用版本
+            try:
+                peft_cfg_obj = list(fused_model.peft_config.values())[0]
+                with open(dst_cfg, "w", encoding="utf-8") as f:
+                    json.dump(
+                        {
+                            "peft_type": str(getattr(peft_cfg_obj, "peft_type", "LORA")),
+                            "task_type": str(getattr(peft_cfg_obj, "task_type", "CAUSAL_LM")),
+                            "base_model_name_or_path": getattr(peft_cfg_obj, "base_model_name_or_path", ""),
+                            "r": int(getattr(peft_cfg_obj, "r", 16)),
+                            "lora_alpha": int(getattr(peft_cfg_obj, "lora_alpha", 16)),
+                            "lora_dropout": float(getattr(peft_cfg_obj, "lora_dropout", 0.0)),
+                            "bias": getattr(peft_cfg_obj, "bias", "none"),
+                            "target_modules": getattr(peft_cfg_obj, "target_modules", None),
+                            "inference_mode": getattr(peft_cfg_obj, "inference_mode", True),
+                        },
+                        f,
+                        ensure_ascii=False,
+                        indent=2,
+                    )
+            except Exception as e:
+                raise RuntimeError(
+                    "Cannot build adapter_config.json; please ensure the source adapters contain adapter_config.json"
+                ) from e
+
+    # 檢查輸出完整性
+    have_cfg = os.path.isfile(os.path.join(out_dir, "adapter_config.json"))
+    have_bin = os.path.isfile(os.path.join(out_dir, "adapter_model.bin")) or \
+               os.path.isfile(os.path.join(out_dir, "adapter_model.safetensors"))
+    if not (have_cfg and have_bin):
+        raise RuntimeError(f"Fuse saved, but adapter files missing in {out_dir}")
+
+    print(f"✅ Saved fused adapter to {out_dir}")
+
+# ---------------------------
+# main
+# ---------------------------
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--base_model", required=True)
-    ap.add_argument("--adapters", nargs="+", required=True)
-    ap.add_argument("--reprs", nargs="+", required=True)
+    ap.add_argument("--adapters", nargs="+", required=True, help="LoRA adapters (each task expert)")
+    ap.add_argument("--reprs",    nargs="+", required=True, help="*.pt produced by extract_representations.py")
+    ap.add_argument("--anchor_task", type=str, default=None, help="task name to use as anchor (default: reprs[0])")
+    ap.add_argument("--temp_head", type=float, default=1.0, help="temperature at shallow layers")
+    ap.add_argument("--temp_tail", type=float, default=1.0, help="temperature at deep layers")
     ap.add_argument("--out_dir", default="./fused_recall")
-    ap.add_argument("--anchor_task", type=str, required=True)
     args = ap.parse_args()
 
-    # 載 repr blobs (CPU)
+    # 讀 repr blobs（CPU）
     repr_blobs = []
-    for rep_path in args.reprs:
-        blob = torch.load(rep_path, map_location="cpu")
-        repr_blobs.append({
-            "task": blob["task"],
-            "reprs": blob["reprs"],  # [N,L,H]
-        })
+    for p in args.reprs:
+        blob = torch.load(p, map_location="cpu")
+        if "reprs" not in blob:
+            raise ValueError(f"{p} missing key 'reprs'")
+        if "task" not in blob:
+            # 若沒 task，就從檔名猜
+            guess = os.path.basename(p).replace("_repr.pt", "")
+            blob["task"] = guess
+        repr_blobs.append({"task": blob["task"], "reprs": blob["reprs"]})
 
-    # ...
-    tasks = [b["task"] for b in repr_blobs]
-    anchor_idx = tasks.index(args.anchor_task)
-    weights_per_layer = compute_layer_weights(repr_blobs, anchor_idx=anchor_idx, sigma=1.0)
+    # 算每層權重
+    weights = compute_layer_weights(
+        repr_blobs,
+        anchor_task=args.anchor_task,
+        temp_head=args.temp_head,
+        temp_tail=args.temp_tail,
+    )
 
-
-    # 算每層融合權重
-    weights_per_layer = compute_layer_weights(repr_blobs)
-    # -> list[L_full], each is tensor[num_models]
-
-    # 進行融合（VRAM 友善）
-    fuse_models(args.base_model, args.adapters, weights_per_layer, args.out_dir)
+    # 融合 + 正確輸出 LoRA
+    fuse_models(args.base_model, args.adapters, weights, args.out_dir)
 
 if __name__ == "__main__":
     main()
